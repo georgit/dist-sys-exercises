@@ -131,8 +131,10 @@ class DiscoveryServer(object):
         if key in self.server_dict:
             # get the list
             listvalue = self.server_dict[key]
-            # get first server in the list.. and return that in protocol format..
-            resp = listvalue[0].split(':')
+            # get a random server in the list.. and return that in protocol format..
+
+            index = randint(0, len(listvalue) - 1)
+            resp = listvalue[index].split(':')
             res = resp[0] + " " + resp[1] 
         else:
             return "None"
