@@ -15,6 +15,7 @@
 import socket
 import sys
 import string
+import os
 
 #******************************************************************************
 #   Discovery Server Class
@@ -65,8 +66,9 @@ class DiscoveryServer(object):
             self.server_dict[key] = strlist
 
         print self.server_dict
+        self.writetofile()
         res = "SUCCESS"
-
+        
         return res
     
     #******************************************************************************
@@ -135,7 +137,8 @@ class DiscoveryServer(object):
 
             index = randint(0, len(listvalue) - 1)
             resp = listvalue[index].split(':')
-            res = resp[0] + " " + resp[1] 
+            res = resp[0] + " " + resp[1]
+            writetofile()
         else:
             return "None"
 
@@ -181,6 +184,18 @@ class DiscoveryServer(object):
         conn.send(res + '\n')
         conn.close()
 
+    def writetofile(self):
+        discfile = open(os.getcwd()+'/discoveryData.txt','w')
+        print "in write"
+        for key in self.server_dict.keys():
+            # get the list of servers..
+            listvalue = self.server_dict[key]
+            for val in listvalue:
+                str = key+" "+val+"\n"
+                print str
+                discfile.write(str)
+        discfile.close()
+        return
 
 
 
