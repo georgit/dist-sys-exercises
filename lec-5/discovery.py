@@ -67,6 +67,7 @@ class DiscoveryServer(object):
 
         print self.server_dict
         self.writetofile()
+        self.readfromfile()
         res = "SUCCESS"
         
         return res
@@ -154,7 +155,6 @@ class DiscoveryServer(object):
         # read userInput from client
         userInput = conn.recv(self.BUFFER_SIZE)
         print "Request: " + userInput.strip('\n')
-
         if not userInput:
                 print "Error reading message\n" 
                 # error case! return FAILURE to user..
@@ -186,14 +186,28 @@ class DiscoveryServer(object):
 
     def writetofile(self):
         discfile = open(os.getcwd()+'/discoveryData.txt','w')
-        print "in write"
         for key in self.server_dict.keys():
             # get the list of servers..
             listvalue = self.server_dict[key]
             for val in listvalue:
                 str = key+" "+val+"\n"
-                print str
                 discfile.write(str)
+        discfile.close()
+        return
+
+    def readfromfile(self):
+        discfile = open(os.getcwd()+'/discoveryData.txt','r')
+        inputstr = ""
+        print "in read"
+        for service in discfile:
+            # get the list of servers..
+            inputstr = service.split();
+            units = inputstr[0].split("-");
+            ipport = inputstr[1].split(":");
+            inputstr = units + ipport
+            print inputstr
+            res = self.add(inputstr)
+            print res
         discfile.close()
         return
 
@@ -224,7 +238,7 @@ if __name__ == "__main__":
         s.listen(5)
         print('Server is running. Port:' + str(portnum))
         action = DiscoveryServer()
-
+        action.readfromfile()
         # Server should be up and running and listening to the incoming connections
         while True:
             # Set up a new connection from the client
