@@ -223,8 +223,7 @@ When inputting the port number and IP address of conversion server and discovery
 In the conversion servers written in python, first input the IP address and port number of conversion server, and then input the IP address and port number discovery server.
 
 While in the conversion servers written in Java and C, first input discovery server's IP address and port number, and then input the conversion server's IP address and port number.
-### 
-### To check how the system handles fault tolerance, the discovery server can be stopped abruptly and restarted.
+## To check how the system handles fault tolerance, the discovery server can be stopped abruptly and restarted.
     You can see that the server will regain the lost data from the backup file named discoveryData.txt that
     contains information of all the conversion servers that registered with the system before crash. If the file 
     is not found or it is not created yet then a new file will be created and data will be stored in that file.
