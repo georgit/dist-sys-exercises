@@ -88,14 +88,14 @@ Port: Discovery server - It is port number of discovery server.
 
 Run:
 ```
-python PythonConvServ2.py 10.0.0.3 5555 10.0.0.98 4444
+python PythonConvServ1.py 54.152.95.76 8888 54.152.95.76 5555
 ```
 Output:
 ```
 registered
 Response: SUCCESS
 
-Started server on  4444
+Started server on  8888
 ```
 #### Python Conversion Server 2 - 
 
@@ -123,14 +123,14 @@ Port: Discovery server - It is port number of discovery server.
 
 Run:
 ```
-python PythonConvServ2.py 10.0.0.3 5555 10.0.0.98 4445
+python PythonConvServ1.py 54.152.95.76 8889 54.152.95.76 5555
 ```
 Output:
 ```
 registered
 Response: SUCCESS
 
-Started server on  4445
+Started server on  8889
 ```
 
 
