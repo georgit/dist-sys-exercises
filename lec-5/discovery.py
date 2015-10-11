@@ -9,12 +9,14 @@
 #
 #******************************************************************************
 #
-# Students: Phani, Teo, Harpreet, Ashwini, Mruganka, Changle
+# Students: Teo, Ashwini, Changle
 #
 
 import socket
 import sys
 import string
+import os
+import logging
 
 #******************************************************************************
 #   Discovery Server Class
@@ -23,6 +25,7 @@ class DiscoveryServer(object):
     def __init__(self):
         self.BUFFER_SIZE = 1024
         self.server_dict = dict()
+        self.backup_dict = self.server_dict.copy()
 
     
     #******************************************************************************
@@ -65,8 +68,9 @@ class DiscoveryServer(object):
             self.server_dict[key] = strlist
 
         print self.server_dict
+        self.writetofile()
         res = "SUCCESS"
-
+        
         return res
     
     #******************************************************************************
@@ -107,6 +111,7 @@ class DiscoveryServer(object):
             return "FAILURE NOTFOUND"
 
         print self.server_dict
+        self.writetofile()
         res = 'SUCCESS'
         
         return res
@@ -135,7 +140,7 @@ class DiscoveryServer(object):
 
             index = randint(0, len(listvalue) - 1)
             resp = listvalue[index].split(':')
-            res = resp[0] + " " + resp[1] 
+            res = resp[0] + " " + resp[1]
         else:
             return "None"
 
@@ -151,7 +156,6 @@ class DiscoveryServer(object):
         # read userInput from client
         userInput = conn.recv(self.BUFFER_SIZE)
         print "Request: " + userInput.strip('\n')
-
         if not userInput:
                 print "Error reading message\n" 
                 # error case! return FAILURE to user..
@@ -181,6 +185,34 @@ class DiscoveryServer(object):
         conn.send(res + '\n')
         conn.close()
 
+    def writetofile(self):
+        discfile = open(os.getcwd()+'/discoveryData.txt','w')
+        for key in self.server_dict.keys():
+            # get the list of servers..
+            listvalue = self.server_dict[key]
+            for val in listvalue:
+                str = key+" "+val+"\n"
+                discfile.write(str)
+        discfile.close()
+        return
+
+    def readfromfile(self):
+        try:
+            discfile = open(os.getcwd()+'/discoveryData.txt','r')
+            inputstr = ""
+            for service in discfile:            # get the list of servers..
+                inputstr = service.split();
+                units = inputstr[0].split("-");
+                ipport = inputstr[1].split(":");
+                inputstr = units + ipport
+                print inputstr
+                res = self.add(inputstr)
+                print res
+            discfile.close()
+        except IOError:
+            # Do not quit or anything like that - since this could just be the first run.
+            print 'Discovery file is not created or the file name is wrong. Please check.'
+        return
 
 
 
@@ -209,7 +241,7 @@ if __name__ == "__main__":
         s.listen(5)
         print('Server is running. Port:' + str(portnum))
         action = DiscoveryServer()
-
+        action.readfromfile()
         # Server should be up and running and listening to the incoming connections
         while True:
             # Set up a new connection from the client
@@ -234,7 +266,7 @@ if __name__ == "__main__":
         s.close()    
         # Exit
         sys.exit(0)
-    except:
-        print "Oh no!! You will not be happy to see this!"
+    except Exception as ex:
+        logging.exception("Oh no!! Something went wrong!")
         sys.exit(1)
 
