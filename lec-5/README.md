@@ -234,6 +234,11 @@ Faults handled: System crash, File not available.
 In order to address scalability, we randomly select a conversion server, so all the available conversion servers
 share the load. Random selection gives almost equal chance to every conversion server.
 
+####The Client
+Compile: javac convClient.java
+Run: java convClient ft in 100
+Our client connects with the proxy server. Therefore, the convClient file stores the host address and port number of the proxy server.
+
 
 
 
