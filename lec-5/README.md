@@ -6,12 +6,12 @@ Discovery server is implemented in Python. To run this server,
 $ python discovery.py portNumber
 
 where,
-portNumber: is the port number that discovery will listen on, for requests.
+portNumber: is the port number that discovery will listen on for requests.
 
 
 Once you have the discovery up and running, you need to then start Conversion servers and Proxy servers with the IP/Hostname and Port Number of this Discovery server.
 
-** ADD/REMOVE/LOOKUP protocols are described in the protocols/ folder. This discovery does exactly that, not more, not less!**
+** ADD/REMOVE/LOOKUP protocols are described in the protocols/ folder. This discovery does exactly that, no more, no less!**
 
 #### Proxy Server
 
@@ -229,14 +229,11 @@ To check how the system handles fault tolerance, the discovery server can be sto
  You can see that the server will regain the lost data from the backup file named discoveryData.txt that
  contains information of all the conversion servers that registered with the system before crash. If the file 
  is not found or it is not created yet then a new file will be created and data will be stored in that file.
+ We also keep a separate copy of the dictionary in memory, in case the first becomes corrupted somehow. This is not likely to happen, however.
 Faults handled: System crash, File not available.
 
-#### Scalability
-In order to address scalability, we randomly select a conversion server, so all the available conversion servers
-share the load. Random selection gives almost equal chance to every conversion server.
-
-#### Load Balance
-In the discovery server, if there are multiple conversion servers that can provide the same conversion type, when a client requires the conversion type, we decide to select one of them randomly. 
+#### Scalability and Load Balance
+In order to address scalability, we randomly select a conversion server, so all the available conversion servers share the load. Random selection gives equal chance to every conversion server. This has the benefit of being easy conceptually, while requiring minimum maintainability effort. It is a simple and neat solution that makes full use of every server.
 
 #### The Client
 Compile: javac convClient.java
