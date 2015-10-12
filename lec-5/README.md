@@ -229,7 +229,10 @@ To check how the system handles fault tolerance, the discovery server can be sto
  You can see that the server will regain the lost data from the backup file named discoveryData.txt that
  contains information of all the conversion servers that registered with the system before crash. If the file 
  is not found or it is not created yet then a new file will be created and data will be stored in that file.
-###
+Faults handled: System crash, File not available.
+#### Scalability
+In order to address scalability, we randomly select a conversion server, so all the available conversion servers
+share the load. Random selection gives almost equal chance to every conversion server.
 
 
 

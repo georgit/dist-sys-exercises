@@ -83,13 +83,19 @@ FAILURE
 ```
 
 #### Fault Tolerance
-* Discovery server creates a text file named discoveryData.txt in the first run and after every add request stores the newly added conversion server into the table used by the program as well as in the above file. So if the server crashes abruptly the data remains in the file and when the server is up and running again, it obtains the data from the file. If the file is not found then the server will create a new file. The data is stored in the following format.
+* Discovery server creates a text file named discoveryData.txt in the first run and after every add request stores
+the newly added conversion server into the table used by the program as well as in the above file. So if the server
+crashes abruptly the data remains in the file and when the server is up and running again, it obtains the data from
+the file. If the file is not found then the server will create a new file. The data is stored in the following
+format.
 * Faults handled: System crash, File not available
 For example.
 ```
 cm-m 10.0.0.98:4423
 ```
-
+#### Scalability
+In order to address scalability, we randomly select a conversion server, so all the available conversion servers
+share the load. Random selection gives almost equal chance to every conversion server.
 
 
 
