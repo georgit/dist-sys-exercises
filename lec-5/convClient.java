@@ -20,29 +20,41 @@ public class convClient
         int portNum =5555;
         
         //Create a Socket object called myClientSocket
-        Socket myClientSocket =  new Socket(hostAddress,portNum);
+        Socket myClientSocket;
         
         //Use the output stream of the socket
-        PrintWriter output = new PrintWriter(myClientSocket.getOutputStream(), true);
+        PrintWriter output;
         
         //Get the information of name and message from the command line.
         
         //Receive the result from the server
-        BufferedReader fromUser = new BufferedReader(new InputStreamReader(myClientSocket.getInputStream()));
+        BufferedReader fromUser;
         
         for (int i = 0; i < 50; i++)
         {
+            //Create a Socket object called myClientSocket
+            myClientSocket =  new Socket(hostAddress,portNum);
+            
+            //Use the output stream of the socket
+            output = new PrintWriter(myClientSocket.getOutputStream(), true);
+            
+            //Get the information of name and message from the command line.
+            
+            //Receive the result from the server
+            fromUser = new BufferedReader(new InputStreamReader(myClientSocket.getInputStream()));
+        
             //Send the information to the server
             //output.println(fromConv + " " + toConv + " " + value);
             output.println(args[0] + " " + args[1] + " " + args[2]);
             
             while(fromUser.readLine() != null)
                 System.out.println("user: " + fromUser.readLine());
+            
+            //Close
+            output.close();
+            myClientSocket.close();
         }
         
-        //Close
-        output.close();
-        myClientSocket.close();
         
     }
 }
