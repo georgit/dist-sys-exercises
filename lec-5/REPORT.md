@@ -378,3 +378,14 @@ LOOK UP b lbs
 FAILURE
 ```
 
+####Handles server crashes gracefully
+One way of our group to deal with server crashes is to catch the exception. Also we displays the information and the type of the exception and the result of the exception. 
+
+
+For example, in some conversion servers and the proxy server, we catch the NumberFormatException, IOExcpetion and etc. After we catch these exception, we will present the exception message and print the stack of error, which can help programmer figure out the type of the exception and can be more easily to debug the program.
+
+
+Also, in the discovery server, we the program is started, if an exception occurs during the execution of try clause the rest of the clause is skipped. If the exception type matches the word after except the except clause is executed.
+
+
+
