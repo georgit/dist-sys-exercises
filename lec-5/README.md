@@ -230,14 +230,22 @@ To check how the system handles fault tolerance, the discovery server can be sto
  contains information of all the conversion servers that registered with the system before crash. If the file 
  is not found or it is not created yet then a new file will be created and data will be stored in that file.
 Faults handled: System crash, File not available.
+
 #### Scalability
 In order to address scalability, we randomly select a conversion server, so all the available conversion servers
 share the load. Random selection gives almost equal chance to every conversion server.
 
-####The Client
+#### Load Balance
+In the discovery server, if there are multiple conversion servers that can provide the same conversion type, when a client requires the conversion type, we decide to select one of them randomly. 
+
+#### The Client
 Compile: javac convClient.java
+
+
 Run: java convClient ft in 100
-Our client connects with the proxy server. Therefore, the convClient file stores the host address and port number of the proxy server.
+
+
+Our client connects with the proxy server. Therefore, the convClient file stores the host address and port number of the proxy server. The reason why we let the client to connect with the proxy server rather than the discovery server is that we consider the discovery server is a dictionary. That is, the discovery server is responsible for managing the conversion table, including the operation of add, remove, and look up. Also, we implement the load balance and fault tolerance in the discovery server. However, the proxy server is like a bridge which connects different conversion servers and the client. Therefore, the client stores the ip address and host number of the proxy server. 
 
 
 
