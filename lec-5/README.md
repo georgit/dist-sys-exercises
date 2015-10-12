@@ -247,6 +247,13 @@ Run: java convClient ft in 100
 
 Our client connects with the proxy server. Therefore, the convClient file stores the host address and port number of the proxy server. The reason why we let the client to connect with the proxy server rather than the discovery server is that we consider the discovery server is a dictionary. That is, the discovery server is responsible for managing the conversion table, including the operation of add, remove, and look up. Also, we implement the load balance and fault tolerance in the discovery server. However, the proxy server is like a bridge which connects different conversion servers and the client. Therefore, the client stores the ip address and host number of the proxy server. 
 
+In addition, there are two ways to implement the client. One way is to transfer the arguments, and the other way does not need to transfer the arguments. In the client file of our group, we use the former. 
 
+Example of the client:
 
+```
+xuchangle: ~ $ javac convClient.java 
+xuchangle: ~ $ java convClient lbs b 897
+2691.000000
+```
 
